@@ -23,7 +23,11 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
+        command: 'buildAndPush'
+        containerRegistry: 'private registry'
+        repository: 'unbound'
+        #workingDirectory: '$(Build.SourcesDirectory)/src 
+        buildContext: '$(Build.Repository.LocalPath)'
         dockerfile: '$(Build.SourcesDirectory)/Alpine/1.17.1/Dockerfile'
         tags: |
-          $(tag)
+          latest
