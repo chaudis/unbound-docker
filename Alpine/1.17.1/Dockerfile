@@ -1,6 +1,6 @@
 ARG IMAGE_BUILD_DATE="2023-02-08" \
-  ALPINE_VERSION="3.17.1" \
-  OPENSSL_VERSION="3.0.8" \
+  ALPINE_VERSION="3.17.3" \
+  OPENSSL_VERSION="3.1.0" \
   LIBEVENT_VERSION="2.1.12" \
   UNBOUND_VERSION="1.17.1" \
   IMAGE_REVISION="2"
@@ -11,7 +11,7 @@ FROM alpine:latest AS openbuildenv
 ARG OPENSSL_VERSION
 
 ENV OPENSSL_VERSION=${OPENSSL_VERSION} \
-  OPENSSL_SHA256="6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e " \
+  OPENSSL_SHA256="aaa925ad9828745c4cad9d9efeb273deca820f2cdcf2c3ac7d7c1212b7c497b4 " \
   OPENSSL_DOWNLOAD_URL="https://www.openssl.org/source/openssl" \
   OPENSSL_SIGNER_RSA="7953AC1FBC3DC8B3B292393ED5E9E43F7DF9EE8C" \
   OPENSSL_PGP="8657ABB260F056B1E5190839D9C4D26D0E604491"
@@ -56,8 +56,8 @@ RUN set -xe; \
   make && \
   make install_sw && \
   apk del --no-cache .build-deps && \
-  pkill -9 gpg-agent && \
-  pkill -9 dirmngr && \
+#  pkill -9 gpg-agent && \
+#  pkill -9 dirmngr && \
   rm -rf \
     /usr/share/man \
     /usr/share/docs \
@@ -107,8 +107,8 @@ RUN set -xe; \
     make && \
     make install && \
     apk del --no-cache .build-deps && \
-    pkill -9 gpg-agent && \
-    pkill -9 dirmngr && \
+    ##pkill -9 gpg-agent && \
+   # pkill -9 dirmngr && \
     rm -rf \
       /usr/share/man \
       /usr/share/docs \
@@ -142,8 +142,8 @@ RUN set -xe; \
     nghttp2-libs \
     expat-dev \
     protobuf-c-dev \
-    apk-tools
- RUN curl -sSL "$UNBOUND_DOWNLOAD_URL" -o unbound.tar.gz && \
+    apk-tools && \
+  curl -sSL "$UNBOUND_DOWNLOAD_URL" -o unbound.tar.gz && \
   curl -sSL "${UNBOUND_DOWNLOAD_URL}".asc -o unbound.tar.gz.asc && \
   echo "${UNBOUND_SHA256} *unbound.tar.gz" | sha256sum -c - && \
   GNUPGHOME="$(mktemp -d)" && \
@@ -201,9 +201,9 @@ RUN set -xe; \
   gpg --verify /usr/local/unbound/iana.d/root.hints.sig /usr/local/unbound/iana.d/root.hints && \
   gpg --verify /usr/local/unbound/iana.d/root.zone.sig /usr/local/unbound/iana.d/root.zone && \
   /usr/local/unbound/sbin/unbound-anchor -v -a /usr/local/unbound/iana.d/root.key || true && \
-  pkill -9 gpg-agent && \
-  pkill -9 dirmngr
-  RUN rm -rf \
+ # pkill -9 gpg-agent && \
+  #pkill -9 dirmngr && \
+  rm -rf \
     /usr/share/man \
     /usr/share/docs \
     /tmp/* \
