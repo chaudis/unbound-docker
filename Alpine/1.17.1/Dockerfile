@@ -1,5 +1,5 @@
-ARG IMAGE_BUILD_DATE="2023-02-08" \
-  ALPINE_VERSION="3.17.3" \
+ARG IMAGE_BUILD_DATE="2023-06-21" \
+  ALPINE_VERSION="3.18.2" \
   OPENSSL_VERSION="3.1.0" \
   LIBEVENT_VERSION="2.1.12" \
   UNBOUND_VERSION="1.17.1" \
@@ -43,6 +43,7 @@ RUN set -xe; \
     cd openssl-"${OPENSSL_VERSION}" && \
     ./Configure \
       no-weak-ssl-ciphers \
+      no-ssl2 \
       no-ssl3 \
       no-err \
       no-tests \
