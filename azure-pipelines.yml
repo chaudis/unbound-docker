@@ -30,6 +30,6 @@ stages:
         repository: 'unbound'
         #workingDirectory: '$(Build.SourcesDirectory)/src 
         buildContext: '$(Build.Repository.LocalPath)'
-        dockerfile: '$(Build.SourcesDirectory)/Alpine/1.17.1/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/Alpine/1.18.0/Dockerfile'
         tags: |
           latest
