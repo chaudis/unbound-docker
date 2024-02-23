@@ -1,5 +1,14 @@
 # Unbound DNS Server Docker Image
 
+## Why this fork?
+1. Provide Alpine dockerfiles, found in [Alpine directory](https://github.com/cederfelt/unbound-docker/tree/master/Alpine).
+2. Buildable with arm64 target
+   
+Example build command for amd64 and arm64.
+```console
+docker buildx build --platform linux/amd64,linux/arm64 --force-rm --push --tag [your-registry-url]/unbound:alpine-latest .
+```
+
 ## Supported tags and respective `Dockerfile` links
 - [`1.17.0`, `latest` (*1.17.0/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.17.0)
 - [`1.16.3`, (*1.16.3/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.16.3)
